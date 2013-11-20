@@ -23,14 +23,81 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Mi primera aplicación</title>
+        <title>Mi primera aplicacion</title>
+        <script>
+			function acceder()
+			{
+				nombre=document.getElementById('name').value;
+				pass=document.getElementById('password').value;
+				recordar=document.getElementById('recordar').checked;
+				if(recordar)
+				{
+					setCookie('nombre',nombre,365);
+					setCookie('pass',pass,365);
+					setCookie('recordar',recordar,365);					
+				}
+				else
+				{
+					delCookie('nombre');
+					delCookie('pass');
+					delCookie('recordar');						
+				}
+				document.acceso.submit();
+			}
+			function delCookie(c_name)
+			{
+				  var d = new Date();
+				  document.cookie = c_name+"=1;expires=" + d.toGMTString() + ";" + ";";				 
+			}			
+			function setCookie(c_name,value,exdays)
+			{
+				var exdate=new Date();
+				exdate.setDate(exdate.getDate() + exdays);
+				var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+				document.cookie=c_name + "=" + c_value;
+			}
+			function getCookie(c_name)
+			{
+				var c_value = document.cookie;
+				var c_start = c_value.indexOf(" " + c_name + "=");
+				if (c_start == -1)
+				  {
+				  c_start = c_value.indexOf(c_name + "=");
+				  }
+				if (c_start == -1)
+				  {
+				  c_value = null;
+				  }
+				else
+				  {
+				  c_start = c_value.indexOf("=", c_start) + 1;
+				  var c_end = c_value.indexOf(";", c_start);
+				  if (c_end == -1)
+				  {
+				c_end = c_value.length;
+				}
+				c_value = unescape(c_value.substring(c_start,c_end));
+				}
+				return c_value;
+			}		
+			function comprobar()
+			{
+				if (getCookie('nombre').length>0)
+				{
+					document.getElementById('name').value=getCookie('nombre');
+					document.getElementById('password').value=getCookie('pass');
+					document.getElementById('recordar').checked=getCookie('recordar');					
+				}
+			}
+		</script>
     </head>
-    <body>
+    <body onLoad="comprobar()">
    	<h1>Mi Acceso</h1>
-        <form>            
-       	  <div class="campoForm"><label>Nombre</label><br /><input type="text"/></div>
-          <div class="campoForm"><label>Contraseña</label><br /><input type="password"/></div>
-          <div class="campoForm"><input type="button" value="Entrar" /></div>
+        <form name="acceso">            
+       	  <div class="campoForm"><label>Nombre</label><br /><input id="name" type="text"/></div>
+          <div class="campoForm"><label>Contraseña</label><br /><input id="password" type="password"/></div>
+          <div class="campoForm"><label>Recuerdarme</label><input id="recordar" type="checkbox"/></div>
+          <div class="botonForm" onClick="acceder()"><input type="button" value="Entrar" /></div>
         </form>
         <script type="text/javascript" src="phonegap.js"></script>
         <!--<script type="text/javascript" src="js/index.js"></script>-->
