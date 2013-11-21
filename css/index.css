@@ -1,5 +1,5 @@
-body{ width:100%; margin:0px; padding:0px; font-size:500%; }
+body{ width:100%; margin:0px; padding:0px; font-size:100%; }
 h1{ text-align:center; padding:0px; margin:0px; font-size:2em; }
-.campoForm, .botonForm{ width:100%; text-align:center; margin:0px; padding:0px; font-size:1em; }
-.campoForm input{ width:60%; margin-bottom:1%; padding:2px; font-size:4em; }
-.botonForm input{ width:60%; padding:2px; font-size:4em; }
+.campoForm, .botonForm, .checkForm{ width:100%; text-align:center; margin:0px; padding:0px; font-size:1.5em; }
+.campoForm input{ width:80%; margin-bottom:1%; padding:2px; font-size:1.5em; }
+.botonForm input{ width:60%; padding:2px; font-size:2em; }

@@ -21,7 +21,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <!--<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Mi primera aplicacion</title>
         <script>
@@ -42,7 +43,38 @@
 					window.localStorage.removeItem("pass");
 					window.localStorage.removeItem("recordar");				
 				}
-				document.acceso.submit();
+
+				if (window.XMLHttpRequest)
+				{// code for IE7+, Firefox, Chrome, Opera, Safari
+				  xmlhttp=new XMLHttpRequest();
+				}
+				else
+				{// code for IE6, IE5
+				  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+				}
+				
+				url = "http://95.39.193.179/cusuario/logueo.php?nombre="+nombre+"&pass="+pass;
+				alert(url);
+				xmlhttp.open("GET",url,true);
+				xmlhttp.send(null);
+				
+				xmlhttp.onreadystatechange=function()
+				{
+				  if (xmlhttp.readyState==4)
+				  {
+					alert(xmlhttp.responseText);
+					if(xmlhttp.responseText) {
+						alert("Se ha logueado correctamente");
+						//window.location.href="plataforma.php";
+					}
+					else {
+						alert("Error al loguearse. Usuario o contraseña incorrectos.");
+						//document.getElementById("formulario_acceso").reset();			
+					}
+				  }
+				}
+		
+				//document.acceso.submit();
 			}
 			function comprobar()
 			{
@@ -57,10 +89,10 @@
     </head>
     <body onLoad="comprobar()">
    	<h1>Mi Acceso</h1>
-        <form name="acceso">            
+        <form name="acceso" id="formulario_acceso">            
        	  <div class="campoForm"><label>Nombre</label><br /><input id="name" type="text"/></div>
           <div class="campoForm"><label>Contraseña</label><br /><input id="password" type="password"/></div>
-          <div class="campoForm"><label>Recuerdarme</label><input id="recordar" type="checkbox"/></div>
+          <div class="checkForm"><label>Recuerdarme en este movil</label><input id="recordar" type="checkbox"/></div>
           <div class="botonForm" onClick="acceder()"><input type="button" value="Entrar" /></div>
         </form>
         <script type="text/javascript" src="phonegap.js"></script>
